@@ -33,7 +33,7 @@ function get_artifact
 }
 export -f get_artifact
 
-cat .artifacts_to_be_fetched | parallel -j 17 --gnu get_artifact {} 
+cat .artifacts_to_be_fetched | parallel -j 8 --gnu get_artifact {} 
 
 [ "$(ls -A artifacts)" ] && ls -1 artifacts/* > .artifacts_fetched_from_upstream
 echo -e "All upstream artifacts downloaded into WORKDIR/artifacts folder \n"
