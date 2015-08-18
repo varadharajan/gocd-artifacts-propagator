@@ -5,7 +5,6 @@ import com.thoughtworks.go.plugin.api.response.execution.ExecutionResult;
 import com.thoughtworks.go.plugin.api.task.TaskConfig;
 import com.thoughtworks.go.plugin.api.task.TaskExecutionContext;
 import com.thoughtworks.go.plugin.api.task.TaskExecutor;
-import org.mockito.Mockito;
 
 
 public class ArtifactsDownloaderExecutor implements TaskExecutor {
@@ -16,8 +15,7 @@ public class ArtifactsDownloaderExecutor implements TaskExecutor {
             return ExecutionResult.success("Artifacts downloaded successfully");
         }
         catch (Exception e) {
-            // TODO: I know. This really sucks. Figure a way out of this mocking hell.
-            if(taskExecutionContext!=null && !Mockito.mockingDetails(taskExecutionContext).isMock()) {
+            if(taskExecutionContext!=null) {
                 taskExecutionContext.console().printLine(stackTraceToString(e));
             }
             return ExecutionResult.failure(e.getMessage(), e);

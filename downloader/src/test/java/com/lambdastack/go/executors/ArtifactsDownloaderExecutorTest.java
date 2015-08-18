@@ -3,6 +3,7 @@ package com.lambdastack.go.executors;
 
 import com.lambdastack.go.core.DependencyResolver;
 import com.lambdastack.go.models.Dependencies;
+import com.thoughtworks.go.plugin.api.task.Console;
 import com.thoughtworks.go.plugin.api.task.TaskExecutionContext;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,6 +45,7 @@ public class ArtifactsDownloaderExecutorTest {
         when(mockArtifactsDownloaderExecutor.execute(null, mockTaskExecutionContext)).thenCallRealMethod();
         when(mockArtifactsDownloaderExecutor.getDependencyResolver(mockTaskExecutionContext)).thenReturn(mockDependencyResolver);
         when(mockDependencyResolver.resolveDependencies()).thenReturn(mockDependencies);
+        when(mockTaskExecutionContext.console()).thenReturn(mock(Console.class));
         when(mockDependencies.fetchArtifacts()).thenThrow(new Exception());
 
         assertFalse(mockArtifactsDownloaderExecutor.execute(null, mockTaskExecutionContext).isSuccessful());
