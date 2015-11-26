@@ -8,6 +8,8 @@ set -e
 
 rm -rf artifacts
 mkdir -p artifacts/pipelines
+rm -rf test_artifacts
+mkdir test_artifacts
 
 # What kind of API optimization is this? Return 202 and ask client to hit the same url again after sometime?
 function try_url
