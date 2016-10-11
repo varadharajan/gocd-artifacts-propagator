@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<go-plugin id="com.lambdastack.go.gocd-artifacts-propagator-uploader" version="1.0-SNAPSHOT">
+<go-plugin id="com.lambdastack.go.gocd-artifacts-propagator-uploader" version="1">
     <about>
         <name>Go Artifacts Propagator Plugin - Uploader</name>
         <version>1.0-SNAPSHOT</version>
