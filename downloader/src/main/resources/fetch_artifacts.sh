@@ -15,7 +15,7 @@ mkdir test_artifacts
 function try_url
 {
     url=$1
-    while [ `curl -u artifacts-propagator:Helpdesk $url -w '%{response_code}' -so /dev/null` -eq 202 ]
+    while [ `curl -H "Confirm: true" -u artifacts-propagator:Helpdesk $url -w '%{response_code}' -so /dev/null` -eq 202 ]
     do
         echo -e "GO just became lazy and returned 202. Retrying to fetch artifacts \n"
         sleep 2
@@ -25,17 +25,17 @@ export -f try_url
 
 function get_artifact
 {
-    url=$1    
+    url=$1
     pid=$BASHPID
     echo -e "Pulling artifacts from $url PID: $pid \n"
     try_url $url
-    curl -u artifacts-propagator:Helpdesk "$url" > /dev/shm/$pid.zip
+    curl -H "Confirm: true" -u artifacts-propagator:Helpdesk "$url" > /dev/shm/$pid.zip
     [ $? -eq  0 ] && unzip -o /dev/shm/$pid.zip
     rm -rf /dev/shm/$pid.zip
 }
 export -f get_artifact
 
-cat .artifacts_to_be_fetched | parallel -j 8 --gnu get_artifact {} 
+cat .artifacts_to_be_fetched | parallel -j 8 --gnu get_artifact {}
 
 [ "$(ls -A artifacts)" ] && ls -1 artifacts/* > .artifacts_fetched_from_upstream
 echo -e "All upstream artifacts downloaded into WORKDIR/artifacts folder \n"
